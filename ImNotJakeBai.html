@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jake Bai</title>
+    <style>
+        .container {
+            display: block;
+        }
+        .main {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .card {
+            padding: 75px 35px;
+            border-style: solid;
+            border-width: 5px;
+            text-shadow: 1px 0.5px #ff0000;
+            text-shadow: #ffcc00;
+            display: inline;
+            margin: 20px 20px;
+        }
+        #c1, #c6 {
+            margin-left: 280px;
+        }
+    </style>
+    <script>
+        window.rounds = 0;
+        window.goldCards;
+        window.cards = {
+            threeStar: ["普信男", "武器大师", "电摇大师", "冰男孩", "污蔑之神", "盲森", "螳螂男", "理工男", "算命大师"],
+            fourStar: ["萨日朗", "多啦A梦", "伊丽莎白", "退钱哥", "黄豆哥", "猪猪侠", "007", "鲨币", "奖励哥", "肾虚哥", "内卷王", "狼人", "绿茶战士", "叙利亚难民", "高质量男性", "女拳", "键盘侠"],
+            fiveStar: ["孙笑川", "丁真", "香蕉君", "张三", "JOJO", "蔡徐坤", "真香哥", "Jake Bai", "MC 之神", "金坷垃", "懂哥", "马保国", "阴阳神"]
+        };
+
+        document.addEventListener("DOMContentLoaded", (event) => {});
+
+        function addBalance(exp) {
+            switch (exp.length) {
+                case 1:
+                    return "&nbsp&nbsp&nbsp&nbsp&nbsp" + exp + "&nbsp&nbsp&nbsp&nbsp&nbsp";
+                    break;
+                case 2:
+                    return "&nbsp&nbsp&nbsp&nbsp" + exp + "&nbsp&nbsp&nbsp&nbsp&nbsp";
+                    break;
+                case 3:
+                    return "&nbsp&nbsp" + exp + "&nbsp&nbsp&nbsp";
+                    break;
+                case 4:
+                    return "&nbsp&nbsp" + exp + "&nbsp&nbsp";
+                    break;
+                case 5:
+                    return exp;
+                    break;
+            }
+        }
+
+        document.addEventListener("keydown", (event) => {
+            let list_innerHTML = [], 
+                list_color = [],
+                fourStar = false;
+            const cards = document.getElementsByClassName("card");
+            if (event.code === "Space") {
+                for (let i=0; i<10; i++) {
+                    let n = Math.random(),
+                    i_char = Math.floor(Math.random() * 100);
+                    if (i === 9 && !(list_color.includes("#FF00EA"))) {
+                        let randNum = Math.floor(Math.random() * 10);
+                        list_innerHTML[randNum] = window.cards.threeStar[i_char % window.cards.threeStar.length];
+                        list_color[randNum] = "#FF00EA";
+                    }
+                    if (n < 0.943) {
+                        list_innerHTML.push(window.cards.threeStar[i_char % window.cards.threeStar.length]);
+                        list_color.push("blue");
+                    } else if (n < (0.943+0.051)) {
+                        list_innerHTML.push(window.cards.fourStar[i_char % window.cards.threeStar.length]);
+                        list_color.push("#FF00EA");
+                        fourStar = true;
+                    } else {
+                        list_innerHTML.push(window.cards.fiveStar[i_char % window.cards.threeStar.length]);
+                        list_color.push("#FFCC00");
+                        window.rounds = 0;
+                        window.goldCards = true;
+                    }
+                }
+
+                if (window.rounds === 8) {
+                    if (!(window.goldCards)) {
+                        let randNum = Math.floor(Math.random() * 10);
+                        list_innerHTML[randNum] = window.cards.fiveStar[Math.floor(Math.random() * 100) % window.cards.threeStar.length];
+                        list_color[randNum] = "#FFCC00";
+                    }
+                    window.rounds = 0;
+                    window.goldCards = false;
+                }
+
+                window.rounds++;
+
+                for (let i=0; i < cards.length; i++) {
+                    cards[i].innerHTML = addBalance(list_innerHTML[i]);
+                    cards[i].style.borderColor = list_color[i];
+                }
+                
+            }
+        });
+    </script>
+</head>
+<body >
+    <div class="container main">
+        <br><br><br><br><br><br><br><br>
+        <p1 class="card" id="c1"></p1>
+        <p1 class="card" id="c2"></p1>
+        <p1 class="card" id="c3"></p1>
+        <p1 class="card" id="c4"></p1>
+        <p1 class="card" id="c5"></p1>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <p1 class="card" id="c6"></p1>
+        <p1 class="card" id="c7"></p1>
+        <p1 class="card" id="c8"></p1>
+        <p1 class="card" id="c9"></p1>
+        <p1 class="card" id="c10"></p1>
+    </div>
+</body>
+</html>
